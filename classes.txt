@@ -1,0 +1,69 @@
+Game {
+  +start() : void
+  +won() : boolean
+  +lost() : boolean
+}
+
+Level {
+  -x_size : int
+  -y_size : int
+  -level : int
+  +Level()
+  +draw() : void
+}
+
+Element {
+  -x_position : int
+  -y_position : int
+  -static : boolean
+  +spawn() : void
+  +destroy() : void
+  +get_x_position() : int
+  +get_y_position() : int
+}
+
+Miner {
+  -nome : String
+  -skin : int
+  -position_x : int
+  -position_y : int
+  -hitpoints : int
+  +Miner()
+  +get_x_position() : int
+  +get_y_position() : int
+  +get_hp() : int
+}
+
+Stone {
+  -type : int
+  -position_x : int
+  -position_y : int
+  +spawn() : void
+  +destroy() : void
+}
+
+Bitcoin {
+  -value : int
+  -position_x : int
+  -position_y : int
+  +spawn() : void
+  +destroy() : void
+  +get_x_position() : int
+  +get_y_position() : int
+}
+
+Enemy {
+  -position_x : int
+  -position_y : int
+  +spawn() : void
+  +get_x_position() : int
+  +get_y_position() : int
+}
+
+Lava {
+  -position_x : int
+  -position_y : int
+  -damage : int ----------- Este é static, não sei como é que se representa
+  +get_x_position() : int
+  +get_y_position() : int
+}
