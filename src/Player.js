@@ -2,20 +2,10 @@ class Player {
   constructor(game, x, y) {
     // Player sprite.
     this.sprite = game.physics.add.sprite(x, y, 'dude');
-    //  Player physics properties.
+    // Player physics properties.
     this.sprite.setCollideWorldBounds(true);
 
-    // Player hitpoints. Starts with 100hp.
-    this.hp = 100;
-
-    // Player hp display
-    this.hpText = game.add.text(650, 16, 'hp: ' + this.hp, { fontSize: '32px', fill: '#ff0000' });
-    this.hpText.setScrollFactor(0);
-
-    // Player vulnerability to enemies
-    this.vulnerability = true;
-
-    //  The score
+    // The score
     this.score = 0;
     this.scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     this.scoreText.setScrollFactor(0);
@@ -33,7 +23,9 @@ class Player {
     }
   }
 
-  getKilled(player, enemy) {
-    
+  getKilled(playerSprite, enemy) {
+    playerSprite.setTint(0xff0000);
+    this.physics.pause();
+    this.gameOver = true;
   };
 }
