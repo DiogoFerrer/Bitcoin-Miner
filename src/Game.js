@@ -20,6 +20,7 @@ class Game extends Phaser.Scene {
     this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 100, frameHeight: 80 });
     this.load.spritesheet('walking', 'resources/walking.png', { frameWidth: 37, frameHeight: 101 });
     this.load.image('enemy', 'resources/diglet.png');
+    this.load.image('gameOver', 'resources/gameOver.png');
   }
 
   create() {
@@ -36,6 +37,9 @@ class Game extends Phaser.Scene {
     // The bitcoins to be collected
     this.bitcoins = new Bitcoin(this, this.platforms);
 
+    // The enemies
+    this.enemies = new Enemy(this, this.platforms);
+
     // Game starts at level 1
     this.levelCount = 1;
 
@@ -44,11 +48,12 @@ class Game extends Phaser.Scene {
 
     //  Input Events
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.pauseButton = this.input.keyboard.addKey('ESC');
 
     //  Collide the player with the ground
     this.physics.add.collider(this.player.sprite, Platform.list);
 
-    //  Checks to see if the player overlaps with any of the this.coins, if he does call the collectcoin function
+    //  Checks to see if the player overlaps with any of the coins, if he does call the collectcoin function
     this.physics.add.overlap(this.player.sprite, Bitcoin.list, this.player.collectcoin, null, this);
 
     // If player touches enemy, lose game
@@ -58,8 +63,7 @@ class Game extends Phaser.Scene {
   update() {
     // Check if game is lost
     if (this.gameOver) {
-      this.gameText = this.add.text(16, 16, 'GAME OVER', { fontFamily: "Monospace", fontSize: '32px', fill: '#000' });
-      this.gameText.setScrollFactor(0);
+      this.add.image(400, 300, 'gameOver').setScale(2).setTintFill(0xffd700);
       return;
     } // Or if level is won
     else if (this.player.score >= this.level.score) {
@@ -88,6 +92,11 @@ class Game extends Phaser.Scene {
     }
     else if (this.cursors.down.isDown) {
       this.player.dig();
+    }
+
+    if(Phaser.Input.Keyboard.JustDown(this.pauseButton)) {
+      this.scene.pause();
+      this.scene.launch('Pause');
     }
 
     if (this.player.sprite.y >= 400) {

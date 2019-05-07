@@ -13,8 +13,6 @@ class Level {
       game.platforms.createPlatform(24+i*48, 224);
     }
 
-    game.enemies = new Enemy(game, game.platforms);
-
     for(var i = 0; i < 17; i++) {
       for(var j = 1; j < 15; j++) {
         if(Math.random() > level/10) {
