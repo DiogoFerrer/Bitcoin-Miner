@@ -30,6 +30,8 @@ class Level {
     game.cameras.main.setBounds(0, 0, 400, 1000);
     game.cameras.main.startFollow(game.player.sprite);
     game.cameras.main.setBackgroundColor('#3d0c02');
+
+    game.levelText = game.add.text(800, 250, 'Level ' + level, { fontFamily: 'Monospace', fontSize: '100px', fill: '#ffff00' });
   }
 
   constructor(game, level) {

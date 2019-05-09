@@ -7,8 +7,6 @@ class Player {
 
     // The score
     this.score = 0;
-    this.scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    this.scoreText.setScrollFactor(0);
 
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
@@ -57,8 +55,8 @@ class Player {
     coin.disableBody(true, true);
 
     //  Add and update the score
-    this.player.score += 10;
-    this.player.scoreText.setText('score: ' + this.player.score);
+    this.player.score += 1;
+    this.scoreText.setText('Bitcoins: ' + this.player.score);
   }
 
   getKilled(playerSprite, enemy) {

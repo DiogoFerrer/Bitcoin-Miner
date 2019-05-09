@@ -46,6 +46,15 @@ class Game extends Phaser.Scene {
     // Initiate level generation
     this.level = new Level(this, this.levelCount);
 
+    // Display player score
+    this.scoreText = this.add.text(16, 16, 'Bitcoins: ' + this.player.score, { fontSize: '32px', fill: '#000' });
+    this.scoreText.setScrollFactor(0);
+
+    // Create and display level timer
+    this.timer = 300;
+    this.timerText = this.add.text(600, 16, 'Time: ' + this.timer, { fontSize: '32px', fill: '#000' });
+    this.timerText.setScrollFactor(0);
+
     //  Input Events
     this.cursors = this.input.keyboard.createCursorKeys();
     this.pauseButton = this.input.keyboard.addKey('ESC');
@@ -64,13 +73,14 @@ class Game extends Phaser.Scene {
     // Check if game is lost
     if (this.gameOver) {
       this.add.image(400, 300, 'gameOver').setScale(2).setTintFill(0xffd700);
-      return;
+      this.scene.pause();
+      this.scene.launch('Restart');
     } // Or if level is won
     else if (this.player.score >= this.level.score) {
       this.level = this.level.nextLevel(this, ++this.levelCount);
     }
 
-    // Movement options
+    // Movement options and input events
     if (this.cursors.left.isDown) {
       this.player.sprite.setVelocityX(-160);
 
@@ -99,10 +109,13 @@ class Game extends Phaser.Scene {
       this.scene.launch('Pause');
     }
 
+    // Change text color for visibility purposes
     if (this.player.sprite.y >= 400) {
-      this.player.scoreText.style.color = "#ffff00";
+      this.scoreText.style.color = "#ffff00";
+      this.timerText.style.color = "#ffff00";
     }
 
+    // Make enemies move the other way when touching a wall
     Enemy.list.children.iterate(function (child) {
       if(child.body.touching.left) {
         child.setVelocityX(50);
@@ -110,6 +123,19 @@ class Game extends Phaser.Scene {
         child.setVelocityX(-50);
       };
     });
+
+    // When level banner leaves screen, destroy it
+    this.levelText.setX(this.levelText.x - 10);
+    if(this.levelText.x < -400) {
+      this.levelText.destroy();
+    }
+
+    // Update timer. If time is up, game over
+    this.timer -= 1/60;
+    this.timerText.setText('Time: ' + this.timer.toFixed(0));
+    if(this.timer <= 0) {
+      this.gameOver = true;
+    }
   }
 
 }

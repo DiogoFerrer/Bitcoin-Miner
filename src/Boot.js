@@ -4,7 +4,7 @@ class Boot {
       type: Phaser.AUTO,
       width: 800,
       height: 600,
-      scene: [ Main, Game, Pause ]
+      scene: [ Main, Game, Pause, Restart ]
     };
 
     this.game = new Phaser.Game(this.config);
