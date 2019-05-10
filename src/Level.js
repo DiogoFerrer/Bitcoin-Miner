@@ -45,9 +45,14 @@ class Level {
     Platform.list.clear(true);
     Enemy.list.clear(true);
     Bitcoin.list.clear(true);
+    game.completedText.destroy();
 
-    // Update score goal
+    // Update player score and level score goal
+    game.player.score = 0;
+    game.scoreText.setText('Bitcoins: ' + game.player.score);
     this.score = level * 10;
+
+    game.waitingForLevel = false;
 
     // Create new level design
     return new Level(game, level);

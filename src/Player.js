@@ -4,6 +4,7 @@ class Player {
     this.sprite = game.physics.add.sprite(x, y, 'dude');
     // Player physics properties.
     this.sprite.setCollideWorldBounds(true);
+    this.vulnerability = true;
 
     // The score
     this.score = 0;
@@ -55,13 +56,15 @@ class Player {
     coin.disableBody(true, true);
 
     //  Add and update the score
-    this.player.score += 1;
+    this.player.score += Math.floor(Math.random() * 5) + 1;
     this.scoreText.setText('Bitcoins: ' + this.player.score);
   }
 
   getKilled(playerSprite, enemy) {
-    playerSprite.setTint(0xff0000);
-    this.physics.pause();
-    this.gameOver = true;
+    if(this.player.vulnerability) {
+      playerSprite.setTint(0xff0000);
+      this.physics.pause();
+      this.gameOver = true;
+    }
   };
 }

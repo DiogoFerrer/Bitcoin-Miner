@@ -45,10 +45,13 @@ class Game extends Phaser.Scene {
 
     // Initiate level generation
     this.level = new Level(this, this.levelCount);
+    this.waitingForLevel = false;
 
-    // Display player score
+    // Display player score and level goal
     this.scoreText = this.add.text(16, 16, 'Bitcoins: ' + this.player.score, { fontSize: '32px', fill: '#000' });
     this.scoreText.setScrollFactor(0);
+    this.goalText = this.add.text(325, 16, 'Goal: ' + this.level.score, { fontSize: '32px', fill: '#000' })
+    this.goalText.setScrollFactor(0);
 
     // Create and display level timer
     this.timer = 300;
@@ -76,8 +79,14 @@ class Game extends Phaser.Scene {
       this.scene.pause();
       this.scene.launch('Restart');
     } // Or if level is won
-    else if (this.player.score >= this.level.score) {
-      this.level = this.level.nextLevel(this, ++this.levelCount);
+    else if (this.player.score >= 1 && !this.waitingForLevel) {
+      this.completedText = this.add.text(100, 250, 'Level completed!', { fontFamily: 'Monospace', fontSize: '64px', fill: '#ffff00' }).setScrollFactor(0);
+      this.waitingForLevel = true;
+      this.player.vulnerability = false;
+
+      this.time.delayedCall(3000, function (){
+        this.level = this.level.nextLevel(this, ++this.levelCount);
+      }, null, this);
     }
 
     // Movement options and input events
@@ -98,7 +107,7 @@ class Game extends Phaser.Scene {
     }
 
     if (this.cursors.up.isDown && this.player.sprite.body.touching.down) {
-      this.player.sprite.setVelocityY(-330);
+      this.player.sprite.setVelocityY(-250);
     }
     else if (this.cursors.down.isDown) {
       this.player.dig();
@@ -113,6 +122,7 @@ class Game extends Phaser.Scene {
     if (this.player.sprite.y >= 400) {
       this.scoreText.style.color = "#ffff00";
       this.timerText.style.color = "#ffff00";
+      this.goalText.style.color = "#ffff00";
     }
 
     // Make enemies move the other way when touching a wall
