@@ -1,7 +1,7 @@
 class Player {
   constructor(game, x, y) {
     // Player sprite.
-    this.sprite = game.physics.add.sprite(x, y, 'dude');
+    this.sprite = game.physics.add.sprite(x, y, 'dude').setScale(0.9);
     // Player physics properties.
     this.sprite.setCollideWorldBounds(true);
     this.vulnerability = true;
@@ -12,29 +12,28 @@ class Player {
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
         key: 'left',
-        frames: game.anims.generateFrameNumbers('walking', { start: 2, end: 3 }),
+        frames: game.anims.generateFrameNumbers('dude', { start: 12, end: 13 }),
         frameRate: 10,
         repeat: -1
     });
 
     game.anims.create({
         key: 'turn',
-        frames: [ { key: 'dude', frame: 4 } ],
+        frames: [ { key: 'dude', frame: 0 } ],
         frameRate: 20
     });
 
     game.anims.create({
         key: 'right',
-        frames: game.anims.generateFrameNumbers('walking', { start: 0, end: 1 }),
+        frames: game.anims.generateFrameNumbers('dude', { start: 10, end: 11 }),
         frameRate: 10,
         repeat: -1
     });
 
     game.anims.create({
         key: 'dig',
-        frames: game.anims.generateFrameNumbers('dude', { start: 0, end: 9 }),
+        frames: game.anims.generateFrameNumbers('dude', { start: 5, end: 9 }),
         frameRate: 10,
-        repeat: -1
     });
   };
 
