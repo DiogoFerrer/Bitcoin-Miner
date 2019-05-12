@@ -17,8 +17,7 @@ class Game extends Phaser.Scene {
 
   preload () {
     this.load.image('coin', 'resources/coin.png');
-    this.load.spritesheet('dude', 'resources/new_miner.png', { frameWidth: 48, frameHeight: 58 });
-    this.load.spritesheet('walking', 'resources/new_walking.png', { frameWidth: 41, frameHeight: 57 });
+    this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 48, frameHeight: 58 });
     this.load.image('enemy', 'resources/diglet.png');
     this.load.image('gameOver', 'resources/gameOver.png');
   }
