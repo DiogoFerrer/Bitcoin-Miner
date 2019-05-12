@@ -18,7 +18,7 @@ class Game extends Phaser.Scene {
   preload () {
     this.load.image('coin', 'resources/coin.png');
     this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 100, frameHeight: 80 });
-    this.load.spritesheet('walking', 'resources/walking.png', { frameWidth: 37, frameHeight: 101 });
+    this.load.spritesheet('walking', 'resources/new_walking.png', { frameWidth: 41, frameHeight: 57 });
     this.load.image('enemy', 'resources/diglet.png');
     this.load.image('gameOver', 'resources/gameOver.png');
   }
@@ -109,7 +109,7 @@ class Game extends Phaser.Scene {
     if (this.cursors.up.isDown && this.player.sprite.body.touching.down) {
       this.player.sprite.setVelocityY(-250);
     }
-    else if (this.cursors.down.isDown) {
+    else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
       this.player.dig();
     }
 

@@ -53,6 +53,7 @@ class Level {
     this.score = level * 10;
 
     game.waitingForLevel = false;
+    game.player.vulnerability = true;
 
     // Create new level design
     return new Level(game, level);

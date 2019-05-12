@@ -12,7 +12,7 @@ class Player {
     //  Our player animations, turning, walking left and walking right.
     game.anims.create({
         key: 'left',
-        frames: game.anims.generateFrameNumbers('dude', { start: 0, end: 6 }),
+        frames: game.anims.generateFrameNumbers('walking', { start: 2, end: 3 }),
         frameRate: 10,
         repeat: -1
     });
@@ -25,7 +25,7 @@ class Player {
 
     game.anims.create({
         key: 'right',
-        frames: game.anims.generateFrameNumbers('dude', { start: 0, end: 6 }),
+        frames: game.anims.generateFrameNumbers('walking', { start: 0, end: 1 }),
         frameRate: 10,
         repeat: -1
     });
@@ -42,9 +42,11 @@ class Player {
     Platform.list.children.iterate(function (child) {
       try {
         if(child.x >= this.sprite.x + 5 && child.x <= this.sprite.x + 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
-          this.sprite.on('animationcomplete', child.destroy, child);
           this.sprite.anims.play('dig', true);
-          child.destroy();
+          child.play('destroy', false);
+          child.once('animationcomplete', () => {
+            child.destroy();
+          });
         }
       } catch {
         console.log("FIX ME");
