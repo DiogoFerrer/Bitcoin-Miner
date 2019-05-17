@@ -119,9 +119,16 @@ class Game extends Phaser.Scene {
 
     // Change text color for visibility purposes
     if (this.player.sprite.y >= 400) {
-      this.scoreText.style.color = "#ffff00";
-      this.timerText.style.color = "#ffff00";
-      this.goalText.style.color = "#ffff00";
+      this.scoreText.destroy();
+      this.timerText.destroy();
+      this.goalText.destroy();
+
+      this.scoreText = this.add.text(16, 16, 'Bitcoins: ' + this.player.score, { fontSize: '32px', fill: "#ffff00" });
+      this.scoreText.setScrollFactor(0);
+      this.goalText = this.add.text(325, 16, 'Goal: ' + this.level.score, { fontSize: '32px', fill: "#ffff00" })
+      this.goalText.setScrollFactor(0);
+      this.timerText = this.add.text(600, 16, 'Time: ' + this.timer, { fontSize: '32px', fill: "#ffff00" });
+      this.timerText.setScrollFactor(0);
     }
 
     // Make enemies move the other way when touching a wall
