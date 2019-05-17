@@ -118,7 +118,7 @@ class Game extends Phaser.Scene {
     }
 
     // Change text color for visibility purposes
-    if (this.player.sprite.y >= 400) {
+    if (this.player.sprite.y >= 500) {
       this.scoreText.style.color = "#ffff00";
       this.timerText.style.color = "#ffff00";
       this.goalText.style.color = "#ffff00";

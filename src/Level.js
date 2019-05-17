@@ -18,7 +18,7 @@ class Level {
         if(Math.random() > level/10) {
           game.platforms.createPlatform(24+i*48, 224+48*j);
         }
-        else if(Math.random() > level/10) {
+        else if(Math.random() > level*5/15) {
           game.bitcoins.createCoin(24+i*48, 225+48*j);
         }
         else if(Math.random() < level/10) {
