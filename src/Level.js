@@ -18,7 +18,7 @@ class Level {
         if(Math.random() > level/10) {
           game.platforms.createPlatform(24+i*48, 224+48*j);
         }
-        else if(Math.random() > level*5/15) {
+        else if(Math.random() > level/10) {
           game.bitcoins.createCoin(24+i*48, 225+48*j);
         }
         else if(Math.random() < level/10) {
@@ -49,8 +49,19 @@ class Level {
 
     // Update player score and level score goal
     game.player.score = 0;
-    game.scoreText.setText('Bitcoins: ' + game.player.score);
     this.score = level * 10;
+
+    // Reset text colors
+    game.scoreText.destroy();
+    game.timerText.destroy();
+    game.goalText.destroy();
+    game.scoreText = game.add.text(16, 16, 'Bitcoins: ' + game.player.score, { fontSize: '32px', fill: "#000" });
+    game.scoreText.setScrollFactor(0);
+    game.goalText = game.add.text(325, 16, 'Goal: ' + this.score, { fontSize: '32px', fill: "#000" })
+    game.goalText.setScrollFactor(0);
+    game.timerText = game.add.text(600, 16, 'Time: ' + game.timer, { fontSize: '32px', fill: "#000" });
+    game.timerText.setScrollFactor(0);
+    game.updated = false;
 
     game.waitingForLevel = false;
     game.player.vulnerability = true;

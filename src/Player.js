@@ -5,6 +5,7 @@ class Player {
     // Player physics properties.
     this.sprite.setCollideWorldBounds(true);
     this.vulnerability = true;
+    this.walking = false;
 
     // The score
     this.score = 0;
@@ -37,15 +38,28 @@ class Player {
     });
   };
 
-  dig() {
+  dig(side) {
     Platform.list.children.iterate(function (child) {
       try {
-        if(child.x >= this.sprite.x + 5 && child.x <= this.sprite.x + 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
-          this.sprite.anims.play('dig', true);
-          child.play('destroy', false);
-          child.once('animationcomplete', () => {
-            child.destroy();
-          });
+        if (side == 'right') {
+          if(child.x >= this.sprite.x + 5 && child.x <= this.sprite.x + 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
+            Sound.digSound.play();
+            this.sprite.anims.play('dig', true);
+            child.play('destroy', false);
+            child.once('animationcomplete', () => {
+              child.destroy();
+            });
+          }
+        }
+        else {
+          if(child.x <= this.sprite.x - 5 && child.x >= this.sprite.x - 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
+            Sound.digSound.play();
+            this.sprite.anims.play('dig', true);
+            child.play('destroy', false);
+            child.once('animationcomplete', () => {
+              child.destroy();
+            });
+          }
         }
       } catch {
         console.log("FIX ME");
@@ -63,6 +77,8 @@ class Player {
 
   getKilled(playerSprite, enemy) {
     if(this.player.vulnerability) {
+      Sound.music.stop();
+      Sound.killedSound.play();
       playerSprite.setTint(0xff0000);
       this.physics.pause();
       this.gameOver = true;

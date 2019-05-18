@@ -12,7 +12,7 @@ class Restart extends Phaser.Scene {
     this.timer = this.time.addEvent({
       delay: 500,
       callback: function() {
-        this.restartText.alpha = this.restartText.alpha = this.restartText.alpha == 1 ? 0 : 1;
+        this.restartText.alpha = this.restartText.alpha == 1 ? 0 : 1;
       },
       callbackScope: this,
       loop: true

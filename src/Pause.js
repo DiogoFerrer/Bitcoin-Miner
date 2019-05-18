@@ -20,6 +20,7 @@ class Pause extends Phaser.Scene {
   update() {
     // Check for keyboard input
     if (this.pauseButton.isDown) {
+      Sound.music.resume();
       this.scene.resume('Game');
       this.scene.stop();
     }

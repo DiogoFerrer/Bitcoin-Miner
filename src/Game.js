@@ -16,33 +16,22 @@ class Game extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('coin', 'resources/coin.png');
     this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 48, frameHeight: 58 });
+    this.load.spritesheet('ground', 'resources/ground.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.image('coin', 'resources/coin.png');
     this.load.image('enemy', 'resources/diglet.png');
     this.load.image('gameOver', 'resources/gameOver.png');
-    this.load.audio('music', 'resources/Nash-gimn.mp3')
+
   }
 
   create() {
-    //Config of sound
-    this.audioConfig = {
-      mute: false,
-      volume: 1,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: true,
-      delay: 0
-    }
-  
-  
-    //Create music variable to start and loop
-    this.music = this.sound.add('music', this.audioConfig);
-    this.music.play();
+
+    // Play game music
+    Sound.music.play();
 
     // Flag for text update
     this.updated = false;
-    
+
     //  A simple background for our game
     this.add.image(400, 400, 'sky');
 
@@ -94,7 +83,8 @@ class Game extends Phaser.Scene {
   update() {
     // Check if game is lost
     if (this.gameOver) {
-      this.add.image(400, 300, 'gameOver').setScale(2).setTintFill(0xffd700);
+      Highscore.register(null, this.levelCount);
+      this.add.image(400, 300, 'gameOver').setScale(2).setTintFill(0xffd700).setScrollFactor(0);
       this.scene.pause();
       this.scene.launch('Restart');
     } // Or if level is won
@@ -113,45 +103,59 @@ class Game extends Phaser.Scene {
       this.player.sprite.setVelocityX(-160);
 
       this.player.sprite.anims.play('left', true);
+      if(this.player.walking === false) {
+        Sound.runSound.play();
+        this.player.walking = true;
+      }
     }
     else if (this.cursors.right.isDown) {
       this.player.sprite.setVelocityX(160);
 
       this.player.sprite.anims.play('right', true);
+      if(this.player.walking === false) {
+        Sound.runSound.play();
+        this.player.walking = true;
+      }
     }
     else {
       this.player.sprite.setVelocityX(0);
 
       this.player.sprite.anims.play('turn');
+      if(this.player.walking === true) {
+        Sound.runSound.stop();
+        this.player.walking = false;
+      }
     }
 
     if (this.cursors.up.isDown && this.player.sprite.body.touching.down) {
       this.player.sprite.setVelocityY(-250);
     }
+    else if (this.cursors.left.isDown && Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+      this.player.dig('left');
+    }
     else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
-      this.player.dig();
+      this.player.dig('right');
     }
 
     if(Phaser.Input.Keyboard.JustDown(this.pauseButton)) {
+      Sound.music.pause();
       this.scene.pause();
       this.scene.launch('Pause');
     }
 
     // Change text color for visibility purposes
-    if (this.player.sprite.y >= 460) {
-        if (this.updated == false){
-        this.scoreText.destroy();
-        this.timerText.destroy();
-        this.goalText.destroy();
+    if (this.player.sprite.y >= 460 && this.updated == false) {
+      this.scoreText.destroy();
+      this.timerText.destroy();
+      this.goalText.destroy();
 
-        this.scoreText = this.add.text(16, 16, 'Bitcoins: ' + this.player.score, { fontSize: '32px', fill: "#ffff00" });
-        this.scoreText.setScrollFactor(0);
-        this.goalText = this.add.text(325, 16, 'Goal: ' + this.level.score, { fontSize: '32px', fill: "#ffff00" })
-        this.goalText.setScrollFactor(0);
-        this.timerText = this.add.text(600, 16, 'Time: ' + this.timer, { fontSize: '32px', fill: "#ffff00" });
-        this.timerText.setScrollFactor(0);
-        this.updated = true;
-      }
+      this.scoreText = this.add.text(16, 16, 'Bitcoins: ' + this.player.score, { fontSize: '32px', fill: "#ffff00" });
+      this.scoreText.setScrollFactor(0);
+      this.goalText = this.add.text(325, 16, 'Goal: ' + this.level.score, { fontSize: '32px', fill: "#ffff00" })
+      this.goalText.setScrollFactor(0);
+      this.timerText = this.add.text(600, 16, 'Time: ' + this.timer, { fontSize: '32px', fill: "#ffff00" });
+      this.timerText.setScrollFactor(0);
+      this.updated = true;
     }
 
     // Make enemies move the other way when touching a wall

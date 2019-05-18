@@ -6,25 +6,31 @@ class Main extends Phaser.Scene {
   preload() {
     this.load.image('startButton', './resources/startButton.png');
     this.load.image('sky', 'resources/sky.png');
-    this.load.spritesheet('ground', 'resources/ground.png', { frameWidth: 16, frameHeight: 16 });
     this.load.image('cup', 'resources/cup.png');
+    this.load.image('mainBg', 'resources/mainBg.png');
+    this.load.image('logo', 'resources/logo.png');
   }
 
   create() {
+    // Play main menu music
+    Sound.mainSound.play();
+
+    // Add background images
     this.add.image(400, 400, 'sky');
-    for(var i = 0; i < 17; i++) {
-      for(var j = 0; j < 15; j++) {
-        this.add.image(24+i*48, 224+48*j, 'ground').setScale(3);
-      }
-    }
+    this.add.image(400, 400, 'mainBg');
+    this.add.image(400, 125, 'logo');
 
-    this.add.text(150, 80, 'Bitcoin Miner', { fontFamily: 'Monospace', fontSize: '64px', fill: '#000' });
+    // Fetch the highscore from localStorage
+    Highscore.key = Object.keys(localStorage);
+    Highscore.highscore = localStorage.getItem(Highscore.key);
 
+    // Add menu buttons
     this.startButton = this.add.image(390, 320, 'startButton').setScale(0.2).setInteractive();
 
     this.scoresButton = this.add.image(100, 525, 'cup').setScale(0.2).setInteractive();
-    this.add.text(55, 555, 'Highscores', { fontFamily: 'Monospace', fontSize: '16px', fill: '#ffff00' });
+    this.add.text(55, 555, 'Highscore', { fontFamily: 'Monospace', fontSize: '16px', fill: '#ffff00' });
 
+    // Add listeners
     this.option = 0;
     this.startButton.on('pointerdown', function(ev) {
       this.option = 1;
@@ -36,10 +42,12 @@ class Main extends Phaser.Scene {
 
   update() {
     if(this.option === 1) {
+      Sound.mainSound.stop();
       this.scene.start('Game');
     }
     else if(this.option === 2) {
-      this.scene.start('Highscores');
+      Sound.mainSound.stop();
+      this.scene.start('Highscore');
     }
   }
 };
