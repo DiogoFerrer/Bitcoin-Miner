@@ -20,9 +20,26 @@ class Game extends Phaser.Scene {
     this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 48, frameHeight: 58 });
     this.load.image('enemy', 'resources/diglet.png');
     this.load.image('gameOver', 'resources/gameOver.png');
+    this.load.audio('music', 'resources/Nash-gimn.mp3')
   }
 
   create() {
+    //Config of sound
+    this.audioConfig = {
+      mute: false,
+      volume: 1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: true,
+      delay: 0
+    }
+  
+  
+    //Create music variable to start and loop
+    this.music = this.sound.add('music', this.audioConfig);
+    this.music.play();
+
     // Flag for text update
     this.updated = false;
     
@@ -121,7 +138,7 @@ class Game extends Phaser.Scene {
     }
 
     // Change text color for visibility purposes
-    if (this.player.sprite.y >= 400) {
+    if (this.player.sprite.y >= 460) {
         if (this.updated == false){
         this.scoreText.destroy();
         this.timerText.destroy();
