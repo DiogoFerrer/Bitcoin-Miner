@@ -46,8 +46,8 @@
     Sound.muted = false;
     Sound.muteButton = this.input.keyboard.addKey('M');
 
-    // When all sounds are loaded, lauch main menu
-    this.scene.launch('Main');
+    // When all sounds are loaded, show tutorial
+    this.scene.launch('Tutorial');
   }
 
   update() {
