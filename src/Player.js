@@ -44,10 +44,10 @@ class Player {
 
   inRange(ground, side) {
     if(side == 'left') {
-      return ground.x <= this.sprite.x - 5 && ground.x >= this.sprite.x - 50 && ground.y <= this.sprite.y + 70 && ground.y >= this.sprite.y;
+      return ground.x <= this.sprite.x - 5 && ground.x >= this.sprite.x - 50 && ground.y <= this.sprite.y + 51 && ground.y >= this.sprite.y;
     }
     else {
-      return ground.x >= this.sprite.x + 5 && ground.x <= this.sprite.x + 50 && ground.y <= this.sprite.y + 70 && ground.y >= this.sprite.y;
+      return ground.x >= this.sprite.x + 5 && ground.x <= this.sprite.x + 50 && ground.y <= this.sprite.y + 51 && ground.y >= this.sprite.y;
     }
   }
 
@@ -70,6 +70,8 @@ class Player {
 
   collectcoin(_playerSprite, coin) {
     coin.disableBody(true, true);
+
+    Sound.coinSound.play();
 
     //  Add and update the score
     this.player.score += Math.floor(Math.random() * 5) + 1;

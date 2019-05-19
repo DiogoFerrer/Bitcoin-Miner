@@ -1,6 +1,8 @@
 class Platform {
   constructor(game) {
     Platform.list = game.physics.add.staticGroup();
+    Platform.width = 48;
+    Platform.height = 48;
 
     game.anims.create({
         key: 'destroy',

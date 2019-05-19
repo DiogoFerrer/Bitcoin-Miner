@@ -89,7 +89,7 @@ class Game extends Phaser.Scene {
       this.scene.pause();
       this.scene.launch('Restart');
     } // Or if level is won
-    else if (this.player.score >= 1 && !this.waitingForLevel) {
+    else if (this.player.score >= this.level.score && !this.waitingForLevel) {
       this.completedText = this.add.text(100, 250, 'Level completed!', { fontFamily: 'Monospace', fontSize: '64px', fill: '#ffff00' }).setScrollFactor(0);
       this.waitingForLevel = true;
       this.player.vulnerability = false;
