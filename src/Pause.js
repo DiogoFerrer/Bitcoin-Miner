@@ -8,6 +8,9 @@ class Pause extends Phaser.Scene {
   }
 
   create() {
+    Sound.music.pause();
+    Sound.runSound.stop();
+
     // Add keyboard input options
     this.pauseButton = this.input.keyboard.addKey('ESC');
     this.exitButton = this.input.keyboard.addKey('Q');

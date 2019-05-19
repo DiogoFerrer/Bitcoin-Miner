@@ -31,6 +31,9 @@ class Highscore extends Phaser.Scene {
       this.add.text(250, 300, "No champion yet!", { fontFamily: 'Monospace', fontSize: '32px', fill: '#000' });
     }
 
+    // Add mute icon
+    Sound.muteIcon = this.add.image(725, 545, 'muteIcon').setFrame(0).setScale(0.2).setTintFill(0x0).setScrollFactor(0);
+
     this.add.text(16, 575, 'Press ESC to leave', { fontFamily: 'Monospace', fill: '#000' });
     this.exitButton = this.input.keyboard.addKey('ESC');
   }

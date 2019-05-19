@@ -30,6 +30,9 @@ class Main extends Phaser.Scene {
     this.scoresButton = this.add.image(100, 525, 'cup').setScale(0.2).setInteractive();
     this.add.text(55, 555, 'Highscore', { fontFamily: 'Monospace', fontSize: '16px', fill: '#ffff00' });
 
+    // Add mute icon
+    Sound.muteIcon = this.add.image(725, 545, 'muteIcon').setFrame(0).setScale(0.2).setTintFill(0xffff00).setScrollFactor(0);
+
     // Add listeners
     this.option = 0;
     this.startButton.on('pointerdown', function(ev) {

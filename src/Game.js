@@ -138,7 +138,6 @@ class Game extends Phaser.Scene {
     }
 
     if(Phaser.Input.Keyboard.JustDown(this.pauseButton)) {
-      Sound.music.pause();
       this.scene.pause();
       this.scene.launch('Pause');
     }

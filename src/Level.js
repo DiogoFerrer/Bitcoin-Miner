@@ -27,6 +27,9 @@ class Level {
       }
     }
 
+    // Add mute icon
+    Sound.muteIcon = game.add.image(725, 545, 'muteIcon').setFrame(0).setScale(0.2).setTintFill(0xffff00).setScrollFactor(0);
+
     game.cameras.main.setBounds(0, 0, 400, 1000);
     game.cameras.main.startFollow(game.player.sprite);
     game.cameras.main.setBackgroundColor('#3d0c02');
