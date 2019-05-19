@@ -4,12 +4,26 @@ class Boot {
       type: Phaser.AUTO,
       width: 800,
       height: 600,
+      title: 'Bitcoin Miner',
       scene: [ Sound, Main, Game, Pause, Restart, Highscore ]
     };
 
     // Boot the game
-    this.game = new Phaser.Game(this.config);
+    Boot.game = new Phaser.Game(this.config);
   }
 }
 
-var game = new Boot();
+// Ask player username
+window.onload = function () {
+  var usernameBtn = document.getElementById('usernameBtn');
+  var usernameInput = document.getElementById('username');
+  usernameBtn.onclick = function () {
+    // Get the username and remove input fields
+    Boot.username = usernameInput.value;
+    var usernameDiv = document.getElementById('usernameDiv');
+    usernameDiv.parentNode.removeChild(usernameDiv);
+
+    // Start game
+    var game = new Boot();
+  }
+}

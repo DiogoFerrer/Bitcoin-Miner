@@ -1,7 +1,11 @@
 class Player {
-  constructor(game, x, y) {
+  constructor(game, x, y, username) {
+    // Player username
+    this.username = username;
+
     // Player sprite.
     this.sprite = game.physics.add.sprite(x, y, 'dude').setScale(0.9);
+
     // Player physics properties.
     this.sprite.setCollideWorldBounds(true);
     this.vulnerability = true;

@@ -48,7 +48,7 @@ class Highscore extends Phaser.Scene {
 
   // Register new highscore in local storage
   static register(name, score) {
-    if (score > parseInt(Highscore.highscore, 10)) {
+    if (Highscore.highscore == null || score > parseInt(Highscore.highscore, 10)) {
       // Default name
       if (name === null) name = 'Champ';
 

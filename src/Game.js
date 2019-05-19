@@ -36,7 +36,7 @@ class Game extends Phaser.Scene {
     this.add.image(400, 400, 'sky');
 
     // The player
-    this.player = new Player(this, 400, 150);
+    this.player = new Player(this, 400, 150, Boot.username);
     this.gameOver = false;
 
     //  The platforms group contains the ground
@@ -83,7 +83,8 @@ class Game extends Phaser.Scene {
   update() {
     // Check if game is lost
     if (this.gameOver) {
-      Highscore.register(null, this.levelCount);
+      // Update highscore if needed
+      Highscore.register(this.player.username, this.levelCount);
       this.add.image(400, 300, 'gameOver').setScale(2).setTintFill(0xffd700).setScrollFactor(0);
       this.scene.pause();
       this.scene.launch('Restart');
@@ -129,6 +130,7 @@ class Game extends Phaser.Scene {
 
     if (this.cursors.up.isDown && this.player.sprite.body.touching.down) {
       this.player.sprite.setVelocityY(-250);
+      Sound.runSound.stop();
     }
     else if (this.cursors.left.isDown && Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
       this.player.dig('left');
