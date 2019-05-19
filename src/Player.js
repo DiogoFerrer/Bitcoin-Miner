@@ -42,6 +42,7 @@ class Player {
     });
   };
 
+  // Check if the ground block is in range of the miner's pickaxe
   inRange(ground, side) {
     if(side == 'left') {
       return ground.x <= this.sprite.x - 5 && ground.x >= this.sprite.x - 50 && ground.y <= this.sprite.y + 51 && ground.y >= this.sprite.y;

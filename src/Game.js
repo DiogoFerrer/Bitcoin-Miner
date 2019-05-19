@@ -16,15 +16,14 @@ class Game extends Phaser.Scene {
   }
 
   preload () {
-    this.load.spritesheet('dude', 'resources/miner.png', { frameWidth: 48, frameHeight: 58 });
-    this.load.spritesheet('ground', 'resources/ground.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.image('coin', 'resources/coin.png');
-    this.load.image('enemy', 'resources/diglet.png');
-    this.load.image('gameOver', 'resources/gameOver.png');
+    this.load.image('coin', 'resources/images/coin.png');
+    this.load.image('enemy', 'resources/images/diglet.png');
 
   }
 
   create() {
+    // Flag the running scene
+    Game.running = true;
 
     // Play game music
     Sound.music.play();
@@ -80,6 +79,54 @@ class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player.sprite, Enemy.list, this.player.getKilled, null, this);
   }
 
+  // All input options available
+  static inputOptions(game) {
+    // Movement options and input events
+    if (game.cursors.left.isDown) {
+      game.player.sprite.setVelocityX(-160);
+
+      game.player.sprite.anims.play('left', true);
+      if(game.player.walking === false) {
+        Sound.runSound.play();
+        game.player.walking = true;
+      }
+    }
+    else if (game.cursors.right.isDown) {
+      game.player.sprite.setVelocityX(160);
+
+      game.player.sprite.anims.play('right', true);
+      if(game.player.walking === false) {
+        Sound.runSound.play();
+        game.player.walking = true;
+      }
+    }
+    else {
+      game.player.sprite.setVelocityX(0);
+
+      game.player.sprite.anims.play('turn');
+      if(game.player.walking === true) {
+        Sound.runSound.stop();
+        game.player.walking = false;
+      }
+    }
+
+    if (game.cursors.up.isDown && game.player.sprite.body.touching.down) {
+      game.player.sprite.setVelocityY(-250);
+      Sound.runSound.stop();
+    }
+    else if (game.cursors.left.isDown && Phaser.Input.Keyboard.JustDown(game.cursors.down)) {
+      game.player.dig('left');
+    }
+    else if (Phaser.Input.Keyboard.JustDown(game.cursors.down)) {
+      game.player.dig('right');
+    }
+
+    if(Phaser.Input.Keyboard.JustDown(game.pauseButton)) {
+      game.scene.pause();
+      game.scene.launch('Pause');
+    }
+  }
+
   update() {
     // Check if game is lost
     if (this.gameOver) {
@@ -100,49 +147,7 @@ class Game extends Phaser.Scene {
     }
 
     // Movement options and input events
-    if (this.cursors.left.isDown) {
-      this.player.sprite.setVelocityX(-160);
-
-      this.player.sprite.anims.play('left', true);
-      if(this.player.walking === false) {
-        Sound.runSound.play();
-        this.player.walking = true;
-      }
-    }
-    else if (this.cursors.right.isDown) {
-      this.player.sprite.setVelocityX(160);
-
-      this.player.sprite.anims.play('right', true);
-      if(this.player.walking === false) {
-        Sound.runSound.play();
-        this.player.walking = true;
-      }
-    }
-    else {
-      this.player.sprite.setVelocityX(0);
-
-      this.player.sprite.anims.play('turn');
-      if(this.player.walking === true) {
-        Sound.runSound.stop();
-        this.player.walking = false;
-      }
-    }
-
-    if (this.cursors.up.isDown && this.player.sprite.body.touching.down) {
-      this.player.sprite.setVelocityY(-250);
-      Sound.runSound.stop();
-    }
-    else if (this.cursors.left.isDown && Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
-      this.player.dig('left');
-    }
-    else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
-      this.player.dig('right');
-    }
-
-    if(Phaser.Input.Keyboard.JustDown(this.pauseButton)) {
-      this.scene.pause();
-      this.scene.launch('Pause');
-    }
+    Game.inputOptions(this);
 
     // Change text color for visibility purposes
     if (this.player.sprite.y >= 460 && this.updated == false) {

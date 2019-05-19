@@ -4,7 +4,7 @@ class Pause extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('pauseImg', 'resources/pause.png');
+    this.load.image('pauseImg', 'resources/images/pause.png');
   }
 
   create() {
@@ -24,11 +24,22 @@ class Pause extends Phaser.Scene {
     // Check for keyboard input
     if (this.pauseButton.isDown) {
       Sound.music.resume();
-      this.scene.resume('Game');
+      if(Game.running === true) {
+        this.scene.resume('Game');
+      }
+      else {
+        this.scene.resume('Wormhole');
+      }
       this.scene.stop();
     }
     else if (this.exitButton.isDown) {
-      this.scene.stop('Game');
+      if(Game.running === true) {
+        Game.running = false;
+        this.scene.stop('Game');
+      }
+      else {
+        this.scene.stop('Wormhole');
+      }
       this.scene.launch('Main');
       this.scene.stop();
     }

@@ -4,7 +4,7 @@ class Highscore extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('highBg', './resources/highBg.png');
+    this.load.image('highBg', './resources/images/highBg.png');
   }
 
   getPadding(len) {

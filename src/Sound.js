@@ -4,18 +4,18 @@
   }
 
   preload() {
-    this.load.image('loading', 'resources/loading.png');
+    this.load.image('loading', 'resources/images/loading.png');
     setTimeout(function(game) {
       game.add.image(400, 300, 'loading');
     }, 500, this);
-    this.load.audio('music', 'resources/music.mp3');
-    this.load.audio('digSound', 'resources/digSound.mp3');
-    this.load.audio('runSound', 'resources/runSound.mp3');
-    this.load.audio('coinSound', 'resources/coinSound.mp3');
-    this.load.audio('highSound', 'resources/highSound.mp3');
-    this.load.audio('mainSound', 'resources/mainSound.mp3');
-    this.load.audio('killedSound', 'resources/killedSound.mp3');
-    this.load.spritesheet('muteIcon', 'resources/muteIcon.png', { frameWidth: 258, frameHeight: 258 });
+    this.load.audio('music', 'resources/sounds/music.mp3');
+    this.load.audio('digSound', 'resources/sounds/digSound.mp3');
+    this.load.audio('runSound', 'resources/sounds/runSound.mp3');
+    this.load.audio('coinSound', 'resources/sounds/coinSound.mp3');
+    this.load.audio('highSound', 'resources/sounds/highSound.mp3');
+    this.load.audio('mainSound', 'resources/sounds/mainSound.mp3');
+    this.load.audio('killedSound', 'resources/sounds/killedSound.mp3');
+    this.load.spritesheet('muteIcon', 'resources/spritesheets/muteIcon.png', { frameWidth: 258, frameHeight: 258 });
   }
 
   // Return config object for sound creation

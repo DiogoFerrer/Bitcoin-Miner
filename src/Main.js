@@ -4,11 +4,14 @@ class Main extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('startButton', './resources/startButton.png');
-    this.load.image('sky', 'resources/sky.png');
-    this.load.image('cup', 'resources/cup.png');
-    this.load.image('mainBg', 'resources/mainBg.png');
-    this.load.image('logo', 'resources/logo.png');
+    this.load.image('startButton', './resources/images/startButton.png');
+    this.load.image('sky', 'resources/images/sky.png');
+    this.load.image('cup', 'resources/images/cup.png');
+    this.load.image('mainBg', 'resources/images/mainBg.png');
+    this.load.image('logo', 'resources/images/logo.png');
+    this.load.image('gameOver', 'resources/images/gameOver.png');
+    this.load.spritesheet('dude', 'resources/spritesheets/miner.png', { frameWidth: 48, frameHeight: 58 });
+    this.load.spritesheet('ground', 'resources/spritesheets/ground.png', { frameWidth: 16, frameHeight: 16 });
   }
 
   create() {
@@ -26,6 +29,7 @@ class Main extends Phaser.Scene {
 
     // Add menu buttons
     this.startButton = this.add.image(390, 320, 'startButton').setScale(0.2).setInteractive();
+    this.wormButton = this.add.image(390, 400, 'startButton').setScale(0.2).setInteractive();
 
     this.scoresButton = this.add.image(100, 525, 'cup').setScale(0.2).setInteractive();
     this.add.text(55, 555, 'Highscore', { fontFamily: 'Monospace', fontSize: '16px', fill: '#ffff00' });
@@ -38,8 +42,11 @@ class Main extends Phaser.Scene {
     this.startButton.on('pointerdown', function(ev) {
       this.option = 1;
     }, this);
-    this.scoresButton.on('pointerdown', function(ev) {
+    this.wormButton.on('pointerdown', function(ev) {
       this.option = 2;
+    }, this);
+    this.scoresButton.on('pointerdown', function(ev) {
+      this.option = 3;
     }, this);
   }
 
@@ -49,6 +56,10 @@ class Main extends Phaser.Scene {
       this.scene.start('Game');
     }
     else if(this.option === 2) {
+      Sound.mainSound.stop();
+      this.scene.start('Wormhole');
+    }
+    else if(this.option === 3) {
       Sound.mainSound.stop();
       this.scene.start('Highscore');
     }

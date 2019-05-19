@@ -21,7 +21,12 @@ class Restart extends Phaser.Scene {
 
   update() {
     if(this.restartButton.isDown) {
-      this.scene.launch('Game');
+      if(Game.running === true) {
+        this.scene.launch('Game');
+      }
+      else {
+        this.scene.launch('Wormhole');
+      }
       this.scene.stop();
     }
   }

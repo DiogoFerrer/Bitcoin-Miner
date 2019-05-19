@@ -5,7 +5,7 @@ class Boot {
       width: 800,
       height: 600,
       title: 'Bitcoin Miner',
-      scene: [ Sound, Main, Game, Pause, Restart, Highscore ]
+      scene: [ Sound, Main, Game, Wormhole, Pause, Restart, Highscore ]
     };
 
     // Boot the game
