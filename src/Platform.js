@@ -10,6 +10,17 @@ class Platform {
   }
 
   createPlatform(x, y) {
-    Platform.list.create(x, y, 'ground').setScale(3).refreshBody();
+    var plat = Platform.list.create(x, y, 'ground').setScale(3).refreshBody();
+    plat.beingDestroyed = false;
+  }
+
+  static destroy(ground, player) {
+    ground.beingDestroyed = true;
+    Sound.digSound.play();
+    player.sprite.anims.play('dig', true);
+    ground.play('destroy', false);
+    ground.once('animationcomplete', () => {
+      ground.destroy();
+    });
   }
 }

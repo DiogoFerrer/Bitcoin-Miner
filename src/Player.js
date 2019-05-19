@@ -38,31 +38,28 @@ class Player {
     });
   };
 
+  inRange(ground, side) {
+    if(side == 'left') {
+      return ground.x <= this.sprite.x - 5 && ground.x >= this.sprite.x - 50 && ground.y <= this.sprite.y + 70 && ground.y >= this.sprite.y;
+    }
+    else {
+      return ground.x >= this.sprite.x + 5 && ground.x <= this.sprite.x + 50 && ground.y <= this.sprite.y + 70 && ground.y >= this.sprite.y;
+    }
+  }
+
   dig(side) {
     Platform.list.children.iterate(function (child) {
-      try {
+      if (child.beingDestroyed === false) {
         if (side == 'right') {
-          if(child.x >= this.sprite.x + 5 && child.x <= this.sprite.x + 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
-            Sound.digSound.play();
-            this.sprite.anims.play('dig', true);
-            child.play('destroy', false);
-            child.once('animationcomplete', () => {
-              child.destroy();
-            });
+          if(this.inRange(child, side)) {
+            Platform.destroy(child, this);
           }
         }
         else {
-          if(child.x <= this.sprite.x - 5 && child.x >= this.sprite.x - 50 && child.y <= this.sprite.y + 70 && child.y >= this.sprite.y) {
-            Sound.digSound.play();
-            this.sprite.anims.play('dig', true);
-            child.play('destroy', false);
-            child.once('animationcomplete', () => {
-              child.destroy();
-            });
+          if(this.inRange(child, side)) {
+            Platform.destroy(child, this);
           }
         }
-      } catch {
-        console.log("FIX ME");
       }
     }, this);
   }
@@ -77,6 +74,7 @@ class Player {
 
   getKilled(playerSprite, enemy) {
     if(this.player.vulnerability) {
+      Sound.runSound.stop();
       Sound.music.stop();
       Sound.killedSound.play();
       playerSprite.setTint(0xff0000);
